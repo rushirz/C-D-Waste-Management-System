@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Panel - C&D Waste Submissions</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    /* General Styles */
+    body {
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f9f9f9;
+      color: #333;
+    }
+
+    /* Sidebar Styles */
+    .sidebar {
+      width: 250px;
+      background-color: #2c3e50;
+      color: #fff;
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100%;
+      padding-top: 50px;
+      padding-left: 20px;
+      box-shadow: 2px 0px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .sidebar h2 {
+      color: #fff;
+      font-size: 1.8em;
+      margin-bottom: 30px;
+    }
+
+    .sidebar a {
+      display: block;
+      color: #bdc3c7;
+      text-decoration: none;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+    }
+
+    .sidebar a:hover {
+      background-color: #34495e;
+      color: #fff;
+    }
+
+    /* Main Content Styles */
+    .main-content {
+      margin-left: 260px;
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+      font-size: 2.5em;
+      margin-bottom: 40px;
+    }
+
+    /* Card Grid Layout */
+    .entry-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+      width: 100%;
+    }
+
+    .entry-card {
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .entry-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .entry-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid #f0f0f0;
+      margin-bottom: 15px;
+      padding-bottom: 10px;
+    }
+
+    .entry-card-title {
+      font-size: 1.2em;
+      font-weight: bold;
+    }
+
+    .entry-card-info {
+      margin: 10px 0;
+      font-size: 1em;
+      color: #555;
+    }
+
+    .entry-card-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    .entry-card button {
+      background-color: #3498db;
+      color: #fff;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .entry-card button:hover {
+      background-color: #2980b9;
+    }
+
+    /* Loader and Empty State */
+    .loader {
+      text-align: center;
+      font-size: 1.2em;
+      color: #888;
+      margin-top: 40px;
+    }
+
+    .no-submissions {
+      text-align: center;
+      font-size: 1.5em;
+      color: #777;
+    }
+  </style>
+</head>
+<body>
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <h2>Admin Panel</h2>
+    <a href="#">Dashboard</a>
+    <a href="submissions.html">Submissions</a>
+    <a href="settings.html">Settings</a>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <h1>🧾 C&D Waste Submissions</h1>
+    <div id="entries" class="entry-grid"></div>
+    <div id="loader" class="loader">Loading submissions...</div>
+    <p id="no-data" class="no-submissions" style="display:none;">No submissions found.</p>
+  </div>
+
+  <script>
+    fetch('/admin/entries')
+      .then(response => response.json())
+      .then(data => {
+        const container = document.getElementById('entries');
+        const loader = document.getElementById('loader');
+        const noData = document.getElementById('no-data');
+        loader.style.display = 'none';
+
+        if (data.length === 0) {
+          noData.style.display = 'block';
+          return;
+        }
+
+        data.forEach(entry => {
+          const div = document.createElement('div');
+          div.className = 'entry-card';
+          div.innerHTML = `
+            <div class="entry-card-header">
+              <div class="entry-card-title">#${entry.submissionId}</div>
+              <div class="date">${new Date(entry.submitted_at).toLocaleString()}</div>
+            </div>
+            <div class="entry-card-info"><strong>Name:</strong> ${entry.username}</div>
+            <div class="entry-card-info"><strong>Email:</strong> ${entry.email}</div>
+            <div class="entry-card-info"><strong>Location:</strong> ${entry.location}</div>
+
+            <div class="entry-card-actions">
+              <button onclick="viewSubmission(${entry.submissionId})">View</button>
+              <button onclick="editSubmission(${entry.submissionId})">Edit</button>
+              <button onclick="deleteSubmission(${entry.submissionId})">Delete</button>
+            </div>
+          `;
+          container.appendChild(div);
+        });
+      })
+      .catch(error => {
+        console.error(error);
+        document.getElementById('loader').innerText = 'Error loading submissions.';
+      });
+
+    // Placeholder functions for action buttons
+    function viewSubmission(id) {
+      alert('View Submission: ' + id);
+    }
+
+    function editSubmission(id) {
+      alert('Edit Submission: ' + id);
+    }
+
+    function deleteSubmission(id) {
+      alert('Delete Submission: ' + id);
+    }
+  </script>
+</body>
+</html>

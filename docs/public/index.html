@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>C&D Waste Management System</title>
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+          url("construction-bg.jpg") no-repeat center center fixed;
+        background-size: cover;
+        color: #f4f4f4;
+      }
+      header {
+        background-color: #222;
+        color: #f1c40f;
+        padding: 2rem;
+        background-image: url("header-bg.jpg");
+        background-size: cover;
+        border-bottom: 3px solid #e67e22;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+      header h1 {
+        font-size: 2rem;
+        margin: 0;
+        flex: 1 1 60%;
+      }
+      .admin-signup-btn {
+        background-color: #f1c40f;
+        color: #222;
+        padding: 0.8rem 1.5rem;
+        border: none;
+        border-radius: 8px;
+        font-weight: bold;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+      .admin-signup-btn:hover {
+        background-color: #d4ac0d;
+      }
+      /* (rest of your original styles continue...) */
+
+      .hero-section {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 3rem 10%;
+        background: #2c3e50;
+        color: #f4f4f4;
+        flex-wrap: wrap;
+      }
+      .hero-text {
+        width: 100%;
+        max-width: 45%;
+      }
+      .hero-text h2 {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+        color: #f39c12;
+      }
+      .hero-text p {
+        font-size: 1.2rem;
+        margin-bottom: 1.5rem;
+      }
+      .hero-image {
+        width: 100%;
+        max-width: 45%;
+        margin-top: 1rem;
+      }
+      .hero-image img {
+        width: 100%;
+        height: auto;
+        border-radius: 10px;
+      }
+
+      @media screen and (max-width: 768px) {
+        .hero-section {
+          flex-direction: column;
+          text-align: center;
+        }
+        .hero-text,
+        .hero-image {
+          max-width: 100%;
+        }
+        header {
+          flex-direction: column;
+          text-align: center;
+        }
+        header h1 {
+          margin-bottom: 1rem;
+        }
+      }
+
+      /* Continue with your original styles below */
+      .project-info {
+        padding: 2rem 10%;
+        text-align: center;
+        background-color: #34495e;
+        color: #f4f4f4;
+      }
+      .project-info p {
+        font-size: 1.1rem;
+        line-height: 1.8;
+        margin-bottom: 2rem;
+      }
+      .container {
+        width: 80%;
+        margin: 2rem auto;
+        background: rgba(34, 34, 34, 0.85);
+        padding: 2rem;
+        border-radius: 15px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+      }
+      .form-group {
+        margin-bottom: 2rem;
+      }
+      .form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: bold;
+        color: #f39c12;
+      }
+      .form-group input,
+      .form-group textarea,
+      .form-group select {
+        width: 100%;
+        padding: 1rem;
+        border: 1px solid #555;
+        border-radius: 8px;
+        font-size: 1rem;
+        background-color: #333;
+        color: #f4f4f4;
+      }
+      .form-group button {
+        background-color: #e67e22;
+        color: #fff;
+        padding: 1rem 2rem;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 1.1rem;
+        transition: background-color 0.3s;
+      }
+      .form-group button:hover {
+        background-color: #d35400;
+      }
+      .image-upload {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 2rem;
+      }
+      .image-upload img {
+        max-width: 30%;
+        height: auto;
+        margin-top: 1rem;
+        border: 2px solid #e67e22;
+        border-radius: 8px;
+      }
+      #progressBar {
+        width: 100%;
+        background-color: #f3f3f3;
+        border-radius: 8px;
+        overflow: hidden;
+        height: 20px;
+        margin-top: 10px;
+      }
+      #progressBar div {
+        width: 0;
+        height: 100%;
+        background-color: #e67e22;
+      }
+      .thank-you-message {
+        text-align: center;
+        margin-top: 3rem;
+        background-color: rgba(34, 34, 34, 0.9);
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+      }
+      .coupon {
+        margin: 1.5rem auto;
+        background-color: #fff3d0;
+        border: 2px dashed #e67e22;
+        padding: 1.5rem;
+        border-radius: 10px;
+        text-align: center;
+        color: #333;
+      }
+      .thank-you-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 1.5rem;
+        margin-top: 2rem;
+        flex-wrap: wrap;
+      }
+      .thank-you-buttons button {
+        background-color: #e67e22;
+        color: #fff;
+        padding: 1rem 2rem;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 1.1rem;
+        transition: background-color 0.3s;
+      }
+      .thank-you-buttons button:hover {
+        background-color: #d35400;
+      }
+      .waste-list {
+        margin-top: 2rem;
+        padding: 1rem;
+        background-color: #444;
+        border-radius: 8px;
+      }
+      .waste-list ul {
+        list-style-type: none;
+        padding-left: 0;
+      }
+      .waste-list li {
+        margin: 0.5rem 0;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Construction and Demolition (C&D) Waste Management System</h1>
+      <button class="admin-signup-btn" onclick="window.location.href='login.html'">
+        Sign up as Admin
+      </button>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="hero-text">
+        <h2>Welcome to the C&D Waste Management System</h2>
+        <p>
+          Our platform is designed to help streamline the management of
+          construction and demolition waste. By submitting your waste data, you
+          contribute to efficient recycling and disposal solutions, helping us
+          make a positive environmental impact.
+        </p>
+        <p>
+          Join us today and play an active role in reducing the carbon footprint
+          of construction and demolition activities. Together, we can create a
+          cleaner, more sustainable future.
+        </p>
+      </div>
+      <div class="hero-image">
+        <img
+          src="/uploads/construcation image.jpeg"
+          alt="Construction and Demolition Waste"
+        />
+      </div>
+    </section>
+
+    <!-- Project Info Section -->
+    <section class="project-info">
+      <h3>About the Project</h3>
+      <p>
+        Our Construction and Demolition (C&D) Waste Management System is built
+        to help businesses and construction sites better manage their waste. By
+        providing a user-friendly platform for submitting and tracking C&D waste,
+        we aim to make the recycling and disposal process more efficient and
+        environmentally responsible.
+      </p>
+      <p>
+        This project is not just about waste management; it’s about reducing the
+        impact of construction on our planet, promoting sustainability, and
+        creating a cleaner environment for future generations.
+      </p>
+    </section>
+
+    <div class="container">
+      <form id="wasteForm" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+          <label for="username">User Name:</label>
+          <input
+            type="text"
+            id="username"
+            name="username"
+            placeholder="Enter your name"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email:</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="Enter your email"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="location">Location:</label>
+          <select id="location" name="location" required>
+            <option value="">Select location</option>
+            <option value="Site A">Site A</option>
+            <option value="Site B">Site B</option>
+            <option value="Site C">Site C</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="wasteCategory">Category of Waste:</label>
+          <select id="wasteCategory">
+            <option value="">Select waste type</option>
+            <option value="Concrete">Concrete</option>
+            <option value="Wood">Wood</option>
+            <option value="Metal">Metal</option>
+            <option value="Plastic">Plastic</option>
+            <option value="Others">Others</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="quantity">Quantity (in kg):</label>
+          <input type="number" id="quantity" placeholder="Enter quantity" />
+        </div>
+
+        <div class="form-group">
+          <button type="button" id="addWasteBtn">Add Waste</button>
+        </div>
+
+        <div class="waste-list" id="wasteList">
+          <h3>Waste Summary:</h3>
+          <ul id="wasteSummary"></ul>
+        </div>
+
+        <div class="form-group image-upload">
+          <label for="imageUpload">Upload Image(s):</label>
+          <input
+            type="file"
+            id="imageUpload"
+            name="images"
+            accept="image/*"
+            multiple
+            required
+          />
+          <div id="previewContainer"></div>
+          <div id="progressBar"><div></div></div>
+        </div>
+
+        <div class="form-group">
+          <button type="submit">Submit</button>
+        </div>
+      </form>
+
+      <div id="thankYouMessage" class="thank-you-message" style="display: none">
+        <h2>Thank you for contributing to C&D Waste Management!</h2>
+        <div class="coupon">
+          <p><strong>Reward Code:</strong> WASTEWISE2024</p>
+        </div>
+        <div class="thank-you-buttons">
+          <button onclick="location.reload();">Submit Another Report</button>
+          <button onclick="window.close();">Finish</button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const wasteEntries = [];
+
+      document
+        .getElementById("addWasteBtn")
+        .addEventListener("click", function () {
+          const wasteCategory = document.getElementById("wasteCategory").value;
+          const quantity = document.getElementById("quantity").value;
+
+          if (wasteCategory && quantity) {
+            wasteEntries.push({ wasteCategory, quantity });
+
+            const wasteSummary = document.getElementById("wasteSummary");
+            const listItem = document.createElement("li");
+            listItem.textContent = `${wasteCategory}: ${quantity} kg`;
+            wasteSummary.appendChild(listItem);
+
+            document.getElementById("wasteCategory").value = "";
+            document.getElementById("quantity").value = "";
+          } else {
+            alert("Please select a waste type and enter a quantity.");
+          }
+        });
+
+      document
+        .getElementById("imageUpload")
+        .addEventListener("change", function (event) {
+          const files = event.target.files;
+          const previewContainer = document.getElementById("previewContainer");
+          const progressBar =
+            document.getElementById("progressBar").firstElementChild;
+
+          previewContainer.innerHTML = "";
+          for (const file of files) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+              const imgElement = document.createElement("img");
+              imgElement.src = e.target.result;
+              previewContainer.appendChild(imgElement);
+            };
+            reader.readAsDataURL(file);
+          }
+
+          let progress = 0;
+          const interval = setInterval(() => {
+            if (progress < 100) {
+              progress += 10;
+              progressBar.style.width = progress + "%";
+            } else {
+              clearInterval(interval);
+            }
+          }, 200);
+        });
+
+      document
+        .getElementById("wasteForm")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+
+          const formData = new FormData();
+          formData.append(
+            "username",
+            document.getElementById("username").value
+          );
+          formData.append("email", document.getElementById("email").value);
+          formData.append(
+            "location",
+            document.getElementById("location").value
+          );
+          formData.append("wasteEntries", JSON.stringify(wasteEntries));
+
+          const files = document.getElementById("imageUpload").files;
+          for (let i = 0; i < files.length; i++) {
+            formData.append("images", files[i]);
+          }
+
+          fetch("/submit", {
+            method: "POST",
+            body: formData,
+          })
+            .then((response) => {
+              if (response.ok) {
+                document.getElementById("wasteForm").style.display = "none";
+                document.getElementById("thankYouMessage").style.display =
+                  "block";
+              } else {
+                alert("Submission failed!");
+              }
+            })
+            .catch((err) => {
+              console.error("Error submitting form:", err);
+              alert("Something went wrong.");
+            });
+        });
+    </script>
+  </body>
+</html>

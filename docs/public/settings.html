@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Panel - C&D Waste Submissions</title>
+  <style>
+    /* Add your styles here */
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f4f6f8;
+      color: #333;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #222;
+      margin-bottom: 30px;
+    }
+
+    .logout-btn {
+      background-color: #FF5733;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      display: block;
+      margin: 20px auto;
+      transition: background-color 0.3s ease;
+    }
+
+    .logout-btn:hover {
+      background-color: #FF6F3D;
+    }
+  </style>
+</head>
+<body>
+  <h1>🧾 Admin Panel - C&D Waste Submissions</h1>
+
+  <!-- Logout Button -->
+  <button id="logout-btn" class="logout-btn">Logout</button>
+
+  <script>
+    document.getElementById('logout-btn').addEventListener('click', function() {
+      window.location.href = '/index.html';  // Redirect to your index.html
+    });
+  </script>
+</body>
+</html>
