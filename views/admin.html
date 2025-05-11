@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel - C&D Waste Management</title>
+  <style>
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 2rem;
+    }
+    th, td {
+      padding: 1rem;
+      border: 1px solid #ddd;
+      text-align: center;
+    }
+    th {
+      background-color: #f39c12;
+      color: #fff;
+    }
+    td img {
+      max-width: 100px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Admin Panel - C&D Waste Management</h1>
+  <h2>Submitted Waste Data</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Submission Time</th>
+        <th>Username</th>
+        <th>Email</th>
+        <th>Location</th>
+        <th>Waste Category</th>
+        <th>Quantity (kg)</th>
+        <th>Image</th>
+      </tr>
+    </thead>
+    <tbody id="submissionsTable"></tbody>
+  </table>
+
+  <script>
+    // Fetch submissions from the backend and populate the table
+    fetch('/admin')
+      .then(response => response.json())
+      .then(data => {
+        const tableBody = document.getElementById('submissionsTable');
+        data.forEach(submission => {
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td>${submission.submission_time}</td>
+            <td>${submission.username}</td>
+            <td>${submission.email}</td>
+            <td>${submission.location}</td>
+            <td>${submission.waste_category}</td>
+            <td>${submission.quantity_kg}</td>
+            <td><img src="${submission.image_path}" alt="Uploaded Image"></td>
+          `;
+          tableBody.appendChild(row);
+        });
+      })
+      .catch(err => {
+        console.error('Error fetching submissions:', err);
+      });
+  </script>
+</body>
+</html>
